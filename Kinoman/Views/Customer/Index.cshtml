@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Kinoman.Models.Customer>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Customers</h2>
+@if (!Model.Any())
+{
+    <p>We don't have any customers, yet</p>
+}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Customer</th>
+            <th>MembershipType</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model)
+        {
+            <tr>
+                <td>@Html.ActionLink(customer.Firstname + " " + customer.Lastname, "Edit", "Customer", new {id = customer.Id}, null)</td>
+                <td>@customer.MembershipType.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

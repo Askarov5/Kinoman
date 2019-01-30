@@ -1,0 +1,15 @@
+﻿@model Kinoman.Models.Customer
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Firstname @Model.Lastname</h2>
+
+<ul>
+    <li>@Model.MembershipType.Name</li>
+    @if (@Model.Birthdate.HasValue)
+    {
+        <li>@Model.Birthdate.Value.ToShortDateString()</li>
+    }
+</ul>

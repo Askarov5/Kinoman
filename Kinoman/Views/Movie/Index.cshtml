@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Kinoman.Models.Movie>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Movies</h2>
+@if (!Model.Any())
+{
+    <p>We don't have movies, yet.</p>
+}
+else
+{
+    <table class="table table-hover table-responsive">
+        <thead>
+            <th>Movie</th>
+            <th>Genre</th>
+        </thead>
+            <tbody>
+                @foreach (var movie in Model) {
+                <tr>
+                    <td>@Html.ActionLink(movie.Name, "Details", "Movie", new { id = movie.Id}, null)</td>
+                    <td>@movie.Genre.Name</td>
+                </tr>
+                }
+            </tbody>
+    </table>
+
+}
