@@ -1,0 +1,45 @@
+﻿@model Kinoman.ViewModels.MovieFormViewModel
+@{
+    ViewBag.Title = "MovieForm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Model.Movie != null)
+{
+    <h1>Edit @Model.Movie.Name</h1>
+}
+else
+{
+    <h1>Add New Movie</h1>
+}
+@using (Html.BeginForm("Save", "Movie", FormMethod.Post, new { @class = "col-md-offset-3 col-md-6 col-sm-12"}))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Movie.Name)
+        @Html.TextBoxFor(m => m.Movie.Name, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Movie.GenreId)
+        @Html.DropDownListFor(m => m.Movie.GenreId, new SelectList(Model.Genres, "Id", "Name"), "Select Genre", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Movie.ReleaseDate)
+        @Html.TextBoxFor(m => m.Movie.ReleaseDate, "{0:d MMM yyyy}", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Movie.DateAdded)
+        @Html.TextBoxFor(m => m.Movie.DateAdded, "{ 0:d MMM yyyy}",new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Movie.NumberInStock)
+        @Html.TextBoxFor(m => m.Movie.NumberInStock, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.TextAreaFor(m => m.Movie.ShortDecription, new { @class = "form-control" , @rows = "10"})
+    </div>
+    @Html.HiddenFor(m => m.Movie.Id);
+
+    <button class="btn btn-primary" type="submit">Save</button>
+    @Html.ActionLink("Cancel","Index", "Customer", new { @class="btn btn-primary"})
+}
+<div class="clearfix"></div>
