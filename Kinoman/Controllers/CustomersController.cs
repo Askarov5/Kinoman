@@ -9,10 +9,10 @@ using Kinoman.ViewModels;
 
 namespace Kinoman.Controllers
 {
-    public class CustomerController : Controller
+    public class CustomersController : Controller
     {
         private ApplicationDbContext _context;
-        public CustomerController()
+        public CustomersController()
         {
             _context = new ApplicationDbContext();
         }
@@ -22,11 +22,11 @@ namespace Kinoman.Controllers
             _context.Dispose();
         }
 
-        public ActionResult New(Customer customer)
+        public ActionResult New()
         {
             var viewModel = new CustomerFormViewModel
             {
-                Customer = customer,
+                Customer = new Customer(),
                 MembershipTypes = _context.MembershipTypes.ToList()
             };
             return View("CustomerForm",viewModel);

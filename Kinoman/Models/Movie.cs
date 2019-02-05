@@ -20,11 +20,15 @@ namespace Kinoman.Models
         [Display(Name = "Genre")]
         public int GenreId { get; set; }
 
+        [Required]
         [Display(Name = "Release Date")]
         public DateTime? ReleaseDate  { get; set; }
 
+        [Display(Name = "Added Date")]
         public DateTime? DateAdded { get; set; }
 
+        [Required]
+        [Range(1, 20)]
         [Display(Name="Quantity in Stock")]
         public short NumberInStock { get; set; }
 

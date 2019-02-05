@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if (Model.Movie != null)
+@if (Model.Movie.Id != 0)
 {
     <h1 class="text-center">Edit @Model.Movie.Name</h1>
 }
@@ -12,37 +12,42 @@ else
 {
     <h1 class="text-center">Add New Movie</h1>
 }
+
+@Html.ValidationSummary()
+
 @using (Html.BeginForm("Save", "Movie", FormMethod.Post, new { @class = "form-horizontal col-lg-offset-4 col-lg-4 col-md-offset-3 col-md-6 col-sm-12" }))
 {
     <div class="form-group">
         @Html.LabelFor(m => m.Movie.Name)
         @Html.TextBoxFor(m => m.Movie.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Movie.Name)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Movie.GenreId)
         @Html.DropDownListFor(m => m.Movie.GenreId, new SelectList(Model.Genres, "Id", "Name"), "Select Genre", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Movie.GenreId)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Movie.ReleaseDate)
-        @Html.TextBoxFor(m => m.Movie.ReleaseDate, "{0:d MMM yyyy}", new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Movie.DateAdded)
-        @Html.TextBoxFor(m => m.Movie.DateAdded, "{ 0:d MMM yyyy}", new { @class = "form-control" })
+        @Html.TextBoxFor(m => m.Movie.ReleaseDate, "{0:d MMM yyyy}", new { @class = "form-control", @placeholder = "01 Jan 1900" })
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Movie.NumberInStock)
         @Html.TextBoxFor(m => m.Movie.NumberInStock, new { @class = "form-control" , @type = "number"})
+        @Html.ValidationMessageFor(m => m.Movie.NumberInStock)
     </div>
     <div class="form-group">
         @Html.TextAreaFor(m => m.Movie.ShortDecription, new { @class = "form-control", @rows = "10" })
     </div>
-    @Html.HiddenFor(m => m.Movie.Id);
+    @Html.HiddenFor(m => m.Movie.Id)
+    @Html.AntiForgeryToken()
     <div class="form-group">
         <button class="btn btn-primary" type="submit">Save</button>
         <button class="btn btn-danger" type="reset">Reset</button>
         @Html.ActionLink("Cancel", "Index", "Movie", new { @class = "btn btn-warning" })
-    </div>
-    
+    </div>    
  }
     <div class="clearfix"></div>
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")    
+}

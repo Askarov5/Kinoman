@@ -9,11 +9,11 @@ using Kinoman.ViewModels;
 
 namespace Kinoman.Controllers
 {
-    public class MovieController : Controller
+    public class MoviesController : Controller
     {
         // GET: Movie
         private ApplicationDbContext _context;
-        public MovieController()
+        public MoviesController()
         {
             _context = new ApplicationDbContext();
         }
@@ -24,8 +24,18 @@ namespace Kinoman.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Movie movie)
         {
+            if (!ModelState.IsValid) {
+                var viewModel = new MovieFormViewModel
+                {
+                    Movie = movie,
+                    Genres = _context.Genres.ToList()
+                };
+                return View("MovieForm", viewModel);
+            }
+
             if (movie.Id == 0)
                 _context.Movies.Add(movie);
             else
@@ -54,6 +64,7 @@ namespace Kinoman.Controllers
         {
             var viewModel = new MovieFormViewModel()
             {
+                Movie = new Movie(),
                 Genres = _context.Genres.ToList()
             };
             return View("MovieForm", viewModel);
