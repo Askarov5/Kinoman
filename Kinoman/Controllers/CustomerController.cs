@@ -22,19 +22,30 @@ namespace Kinoman.Controllers
             _context.Dispose();
         }
 
-        public ActionResult New()
+        public ActionResult New(Customer customer)
         {
-            var membershipTypes = _context.MembershipTypes.ToList();
             var viewModel = new CustomerFormViewModel
             {
-                MembershipTypes = membershipTypes
+                Customer = customer,
+                MembershipTypes = _context.MembershipTypes.ToList()
             };
             return View("CustomerForm",viewModel);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Customer customer)
         {
+            //Validation
+            if(!ModelState.IsValid){
+                var viewModel = new CustomerFormViewModel
+                {
+                    Customer = customer,
+                    MembershipTypes = _context.MembershipTypes.ToList()
+                };
+                return View("CustomerForm", viewModel);
+            }
+
             if (customer.Id == 0)
                 _context.Customers.Add(customer);
             else

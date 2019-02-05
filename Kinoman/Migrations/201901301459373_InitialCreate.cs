@@ -16,12 +16,11 @@ namespace Kinoman.Migrations
                         Lastname = c.String(nullable: false, maxLength: 255),
                         Birthdate = c.DateTime(storeType: "date"),
                         IsSubscribedToNewsletter = c.Boolean(nullable: false),
-                        MembershipTypeId = c.Int(nullable: false),
-                        MembershipType_Id = c.Byte(),
+                        MembershipTypeId = c.Byte(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.MembershipTypes", t => t.MembershipType_Id)
-                .Index(t => t.MembershipType_Id);
+                .ForeignKey("dbo.MembershipTypes", t => t.MembershipTypeId)
+                .Index(t => t.MembershipTypeId);
             
             CreateTable(
                 "dbo.MembershipTypes",

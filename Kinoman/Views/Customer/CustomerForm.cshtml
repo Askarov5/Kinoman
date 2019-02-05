@@ -4,33 +4,55 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>New Customer</h2>
-
-@using (Html.BeginForm("Save", "Customer"))
+@if (Model.Customer != null)
 {
+    <h2 class="text-center">Edit Customer Information</h2>
+}
+else
+{
+    <h2 class="text-center">New Customer</h2>
+}
+
+@using (Html.BeginForm("Save", "Customer", FormMethod.Post, new { @class = "form-horizontal col-lg-offset-4 col-lg-4 col-md-offset-3 col-md-6 col-sm-12" }))
+{
+    @Html.ValidationSummary(true)
     <div class="form-group">
         @Html.LabelFor(m => m.Customer.Firstname)
         @Html.TextBoxFor(m => m.Customer.Firstname, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.Firstname)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Customer.Lastname)
         @Html.TextBoxFor(m => m.Customer.Lastname, new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        <label for="Birthdate">Date of Birth</label>
-        @Html.TextBoxFor(m => m.Customer.Birthdate, "{0:d MMM yyyy}", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.Lastname)
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Customer.MembershipTypeId)
         @Html.DropDownListFor(m => m.Customer.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), "Select Membership Type", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.MembershipTypeId)
     </div>
-    <div class="checkbox">
-        <label>
-            @Html.CheckBoxFor(m => m.Customer.IsSubscribedToNewsletter) Subscribe to Newsletter?
-        </label>
+    <div class="form-group">
+        <label for="Birthdate">Date of Birth</label>
+        @Html.TextBoxFor(m => m.Customer.Birthdate, "{0:d MMM yyyy}", new { @class = "form-control", placeholder = "01 Jan 1900" })
+        @Html.ValidationMessageFor(m => m.Customer.Birthdate)
+    </div>
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(m => m.Customer.IsSubscribedToNewsletter) Subscribe to Newsletter?
+            </label>
+        </div>
     </div>
     @Html.HiddenFor(m => m.Customer.Id)
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button class="btn btn-primary" type="submit">Save</button>
+        <button class="btn btn-danger" type="reset">Reset</button>
+        @Html.ActionLink("Cancel", "Index", "Customer", new { @class = "btn btn-warning" })
     </div>
+}
+<div class="clearfix"></div>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
 }

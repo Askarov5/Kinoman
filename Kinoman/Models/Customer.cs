@@ -21,13 +21,15 @@ namespace Kinoman.Models
 
         [DataType(DataType.Date)]
         [Column(TypeName = "Date")]
+        [Min18YearsIfAMember]
         public DateTime? Birthdate { get; set; }
 
         public bool IsSubscribedToNewsletter { get; set; }
 
         public MembershipType MembershipType { get; set; }
 
+        [Required]
         [Display(Name = "Membership Type")]
-        public int MembershipTypeId { get; set; }
+        public byte MembershipTypeId { get; set; }
     }
 }

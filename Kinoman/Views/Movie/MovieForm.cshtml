@@ -6,13 +6,13 @@
 
 @if (Model.Movie != null)
 {
-    <h1>Edit @Model.Movie.Name</h1>
+    <h1 class="text-center">Edit @Model.Movie.Name</h1>
 }
 else
 {
-    <h1>Add New Movie</h1>
+    <h1 class="text-center">Add New Movie</h1>
 }
-@using (Html.BeginForm("Save", "Movie", FormMethod.Post, new { @class = "col-md-offset-3 col-md-6 col-sm-12"}))
+@using (Html.BeginForm("Save", "Movie", FormMethod.Post, new { @class = "form-horizontal col-lg-offset-4 col-lg-4 col-md-offset-3 col-md-6 col-sm-12" }))
 {
     <div class="form-group">
         @Html.LabelFor(m => m.Movie.Name)
@@ -28,18 +28,21 @@ else
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Movie.DateAdded)
-        @Html.TextBoxFor(m => m.Movie.DateAdded, "{ 0:d MMM yyyy}",new { @class = "form-control" })
+        @Html.TextBoxFor(m => m.Movie.DateAdded, "{ 0:d MMM yyyy}", new { @class = "form-control" })
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Movie.NumberInStock)
-        @Html.TextBoxFor(m => m.Movie.NumberInStock, new { @class = "form-control" })
+        @Html.TextBoxFor(m => m.Movie.NumberInStock, new { @class = "form-control" , @type = "number"})
     </div>
     <div class="form-group">
-        @Html.TextAreaFor(m => m.Movie.ShortDecription, new { @class = "form-control" , @rows = "10"})
+        @Html.TextAreaFor(m => m.Movie.ShortDecription, new { @class = "form-control", @rows = "10" })
     </div>
     @Html.HiddenFor(m => m.Movie.Id);
-
-    <button class="btn btn-primary" type="submit">Save</button>
-    @Html.ActionLink("Cancel","Index", "Customer", new { @class="btn btn-primary"})
-}
-<div class="clearfix"></div>
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit">Save</button>
+        <button class="btn btn-danger" type="reset">Reset</button>
+        @Html.ActionLink("Cancel", "Index", "Movie", new { @class = "btn btn-warning" })
+    </div>
+    
+ }
+    <div class="clearfix"></div>
