@@ -27,5 +27,7 @@ namespace Kinoman.DTOS
         
         [Required]
         public byte MembershipTypeId { get; set; }
+
+        public MembershipTypeDto MembershipType { get; set; }
     }
 }

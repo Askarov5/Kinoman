@@ -2,6 +2,7 @@
 using Kinoman.DTOS;
 using Kinoman.Models;
 using System;
+using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -20,9 +21,13 @@ namespace Kinoman.Controllers.API
         }
 
         //Get api/customers
-        public IEnumerable<CustomerDto> GetCustomers()
+        public IHttpActionResult GetCustomers()
         {
-            return _context.Customers.ToList().Select(Mapper.Map<Customer, CustomerDto>);
+            var customerDtos = _context.Customers
+                .Include(c => c.MembershipType)
+                .ToList()
+                .Select(Mapper.Map<Customer, CustomerDto>);
+            return Ok(customerDtos);
         }
 
         //Get api/customer/1
